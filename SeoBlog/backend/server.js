@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 //8. Bring external exports from other files
 const blogRoutes = require('./routes/blog');
+const authRoutes = require('./routes/auth');
 
 //2. Run App 
 const app = express();
@@ -39,7 +40,8 @@ if(process.env.NODE_ENV === 'development'){
 //When used as a middleware then the port use the app
 //The blogRoutes are in other file where it is used as GET
 
-app.use('/api',blogRoutes);//coming from routes
+app.use('/api',blogRoutes);//coming from routes blog
+app.use('/api', authRoutes);//coming from routes auth
 
 //5. Bring routes that will be called by frontend
 /*app.get('/api', (req, res)=>{
