@@ -39,7 +39,7 @@ if(process.env.NODE_ENV === 'development'){
 //When used as a middleware then the port use the app
 //The blogRoutes are in other file where it is used as GET
 
-app.use('/api',blogRoutes);
+app.use('/api',blogRoutes);//coming from routes
 
 //5. Bring routes that will be called by frontend
 /*app.get('/api', (req, res)=>{
