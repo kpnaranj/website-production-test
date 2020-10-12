@@ -4,10 +4,21 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 //2. Run App 
 const app = express();
+
+//7. Bring database that will be used for the project
+//Either Atlas or local host
+mongoose.connect(process.env.DATABASE_LOCAL, {
+    useNewUrlParser: true, 
+    useCreateIndex:true , 
+    useUnifiedTopology: true, 
+    useFindAndModify:false
+})
+.then(()=>{console.log('DB is connected')});
 
 //3. Apply middlewares
 app.use(morgan('dev'));
