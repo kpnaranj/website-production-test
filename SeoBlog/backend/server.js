@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
+//8. Bring external exports from other files
+const blogRoutes = require('./routes/blog');
 
 //2. Run App 
 const app = express();
@@ -33,11 +35,16 @@ if(process.env.NODE_ENV === 'development'){
     app.use(cors({origin: `${process.env.CLIENT_URL}`}));
 }
 
+//9. routes middlewares replaced by 5
+//When used as a middleware then the port use the app
+//The blogRoutes are in other file where it is used as GET
+
+app.use('/api',blogRoutes);
 
 //5. Bring routes that will be called by frontend
-app.get('/api', (req, res)=>{
+/*app.get('/api', (req, res)=>{
     res.json({time:Date().toString()});
-})
+})*/
 
 //6. Bring and listen the port 
 const port = process.env.PORT || 5000;
