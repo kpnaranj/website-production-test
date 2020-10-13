@@ -6,6 +6,7 @@
 const {check} = require('express-validator');
 
 //2. Export the type of validator we want 
+//1. User signup validator 
 exports.userSignupValidator = [
     check('name').
         not().
@@ -18,6 +19,17 @@ exports.userSignupValidator = [
         isLength({min:6}).
         withMessage('Password must be at least six characters long')
 ];
+
+exports.userSigninValidator = [
+    check('email').
+        isEmail().
+        withMessage('Must be a valid email adress'),
+    check('password').
+        isLength({min:6}).
+        withMessage('Password must be at least six characters long')
+];
+
+//2. User signin validator 
 
 //When it runs, this will be sent as error, how do we send error
 //In the index

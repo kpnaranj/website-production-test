@@ -2,12 +2,12 @@
 const express = require('express');
 const router = express.Router();
 //to export set variables we use the {} functionality
-const {signup} = require("../controllers/auth");
+const {signup, signin, signout, requireSignin} = require("../controllers/auth");
 
 //validators 
 
 const{runValidation} = require('../validators');//it automatically goes to index.js
-const {userSignupValidator} =require('../validators/auth'); //it checks errors 
+const {userSignupValidator, userSigninValidator} =require('../validators/auth'); //it checks errors 
 
 //2. then get a request for the routes of the api
 //3. The response of the router could be complex
@@ -18,6 +18,14 @@ const {userSignupValidator} =require('../validators/auth'); //it checks errors
 //2. Check if there is any error 
 //3. Send errors if there are errors 
 //4. Run the API from controllers
-router.post('/signup',userSignupValidator, runValidation, signup);//from controllers/signup
+router.post('/signup',userSignupValidator, runValidation, signup);//from controllers/auth - signin
+router.post('/signin',userSigninValidator, runValidation, signin);//from controllers/auth -signup
+router.get('/signout', signout);// from controllers/auth
+//test
+router.get('/secret', requireSignin, (req, res)=>{
+    res.json({
+        message: 'you have access to secret key'
+    })
+})
 
 module.exports = router;
