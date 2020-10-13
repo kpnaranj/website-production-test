@@ -6,6 +6,7 @@
 
 //Layout is our default settings
 import Layout from '../components/Layout';
+import Link from 'next/link';
 
 
 const Index =()=> {
@@ -14,7 +15,10 @@ const Index =()=> {
         //when we set up layout like this it goes 
         //the content as children 
         <Layout>
-            <h2>Index page</h2>
+            <h2>Home page</h2>
+            <Link href="/signup">
+                <a>Signup</a>
+            </Link>
         </Layout>
     )
 }
