@@ -1,8 +1,10 @@
 //This is the second route, only the direction of the API
 const express = require('express');
+const { cookie } = require('express-validator');
 const router = express.Router();
 //to export set variables we use the {} functionality
 const {signup, signin, signout, requireSignin} = require("../controllers/auth");
+const user = require('../models/user');
 
 //validators 
 
@@ -23,9 +25,8 @@ router.post('/signin',userSigninValidator, runValidation, signin);//from control
 router.get('/signout', signout);// from controllers/auth
 //test
 router.get('/secret', requireSignin, (req, res)=>{
-    res.json({
-        message: 'you have access to secret key'
-    })
+
+    res.json({user: req.auth})
 })
 
 module.exports = router;
