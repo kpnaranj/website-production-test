@@ -1,5 +1,6 @@
-import {useState} from 'react';
-import {signup} from '../../actions/auth'
+import {useState, useEffect} from 'react';
+import {signup, isAuth} from '../../actions/auth';
+import Router from 'next/router';
 
 
 const SignupComponent = () =>{
@@ -15,8 +16,12 @@ const SignupComponent = () =>{
     //We want to have these values as types
 
     const {name, email, password, error, loading, message, showForm} = values;
-
-
+    
+    //It changes stages 
+    useEffect(()=>{
+        isAuth() && Router.push('/');
+    },[])
+    
     const handleSubmit = (e)=>{
         e.preventDefault();
         setValues({...values, loading:true, error:false});
