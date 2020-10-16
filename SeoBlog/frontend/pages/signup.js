@@ -1,5 +1,6 @@
 import Layout from '../components/Layout';
 import Link from 'next/link';
+import SignupComponent from '../components/auth/SignupComponent';
 
 const Signup =()=> {
     
@@ -8,10 +9,7 @@ const Signup =()=> {
         //the content as children 
         <Layout>
             <h2>Signup</h2>
-            <Link href="/signin">
-                <a>Signin</a>
-            </Link>
-            
+            <SignupComponent/>
         </Layout>
     )
 }
