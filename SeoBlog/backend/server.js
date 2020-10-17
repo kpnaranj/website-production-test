@@ -9,6 +9,7 @@ require('dotenv').config();
 //8. Bring external exports from other files
 const blogRoutes = require('./routes/blog');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 //2. Run App 
 const app = express();
@@ -42,7 +43,7 @@ if(process.env.NODE_ENV === 'development'){
 
 app.use('/api',blogRoutes);//coming from routes blog
 app.use('/api', authRoutes);//coming from routes auth
-
+app.use('/api', userRoutes);
 //5. Bring routes that will be called by frontend
 /*app.get('/api', (req, res)=>{
     res.json({time:Date().toString()});

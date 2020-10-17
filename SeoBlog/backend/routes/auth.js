@@ -24,9 +24,12 @@ router.post('/signup',userSignupValidator, runValidation, signup);//from control
 router.post('/signin',userSigninValidator, runValidation, signin);//from controllers/auth -signup
 router.get('/signout', signout);// from controllers/auth
 //test
+
+/*
 router.get('/secret', requireSignin, (req, res)=>{
 
     res.json({user: req.auth})
 })
+*/
 
 module.exports = router;
