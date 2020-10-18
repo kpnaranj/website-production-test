@@ -19,7 +19,6 @@ const AdminIndex =()=> {
                                     </Link>
                                 </li>
                             </ul>
-                            
                         </div>
                         <div className="col-md-8">rigth</div>
                     </div>
