@@ -127,7 +127,6 @@ exports.authMiddleware = (req, res, next) => {
         });
       }
       req.profile = user;
-      console.log(req.profile);
       next();
     });
   };
@@ -148,7 +147,6 @@ exports.adminMiddleware = (req, res, next) => {
       }
       
       req.profile = user;
-      console.log(req.profile);
       next();
     });
   };
