@@ -11,7 +11,7 @@ const blogRoutes = require('./routes/blog');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const categoryRoutes = require('./routes/category');
-
+const tagRoutes = require('./routes/tag');
 //2. Run App 
 const app = express();
 
@@ -46,6 +46,7 @@ app.use('/api',blogRoutes);//coming from routes blog
 app.use('/api', authRoutes);//coming from routes auth
 app.use('/api', userRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api', tagRoutes);
 //5. Bring routes that will be called by frontend
 /*app.get('/api', (req, res)=>{
     res.json({time:Date().toString()});
