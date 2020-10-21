@@ -35,20 +35,31 @@ const Header = () => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            {!isAuth() && 
-            <React.Fragment>
-              <NavItem>
-                <Link href="/signin"> 
-                  <NavLink>Signin</NavLink>
-                </Link>
-              </NavItem>
-              <NavItem>
-                <Link href="/signup"> 
-                  <NavLink>Signup</NavLink>
-                </Link>
-              </NavItem>
-            </React.Fragment>
-            }
+          
+        
+              <React.Fragment>
+                <NavItem>
+                  <Link href="/blogs"> 
+                    <NavLink>Blogs</NavLink>
+                  </Link>
+                </NavItem>
+              </React.Fragment>
+        
+            
+            {!isAuth() && (
+              <React.Fragment>
+                <NavItem>
+                  <Link href="/signin"> 
+                    <NavLink>Signin</NavLink>
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link href="/signup"> 
+                    <NavLink>Signup</NavLink>
+                  </Link>
+                </NavItem>
+              </React.Fragment>
+            )}
             
            {isAuth() && isAuth().role ===0 &&(
               <NavItem>
