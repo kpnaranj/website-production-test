@@ -25,10 +25,6 @@ const Card = ({blog})=>{
             )
         })
         
-    
-    
-    
-
     return (
         <div className="lead pb-4">
         <header>
@@ -51,7 +47,11 @@ const Card = ({blog})=>{
         </section>
         
         <div className="row">
-            <div className="col-md-4">Image</div>
+            <div className="col-md-4">
+                <section>
+                    <img className="img img-fluid " style={{maxHeight: '200px', width:'auto'}} src={`${API}/blog/photo/${blog.slug}`} alt={ blog.title}/>
+                </section>
+            </div>
             <div className="col-md-8">
                 <section>
                     <div className="pb-3">
