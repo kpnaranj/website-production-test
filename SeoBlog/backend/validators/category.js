@@ -5,5 +5,5 @@ exports.categoryCreateValidator = [
     check('name').
         not().
         isEmpty().
-        withMessage('Name is required'),
+        withMessage('category is required'),
 ];
