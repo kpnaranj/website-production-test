@@ -207,10 +207,69 @@ exports.read=(req, res)=>{
 
 };
 
-exports.update=()=>{
 
+exports.update = (req, res)=>{
+    const slug = req.params.slug.toLowerCase();
+    Blog.findOne({slug}).exec((err, oldBlog)=>{
+        if(err){
+            return res.status(400).json({
+                error: errorHandler(err)
+            })
+        } 
+        let form = new formidable.IncomingForm();
+        form.parse(req, (err, fields, files)=>{
+            if(err){
+                return res.status(400).json({
+                    error: 'Image could not upload'
+                })
+            }
+            
+            let slugBeforeMerge = oldBlog.slug;
+            oldBlog = _.merge(oldBlog, fields);
+            oldBlog.slug = slugBeforeMerge;
+            
+            const {body, desc, categories, tags} = fields;
+            
+            if(body){
+                oldBlog.excerpt = smartTrim(body, 320, '', ' ....');
+                oldBlog.desc =stripHtml(body.substring(0,160));
+            }
+            
+            if(categories){
+                oldBlog.categories = categories.split(',');
 
+            }
+            
+            if(tags){
+                oldBlog.tags= tags.split(',');
 
-}
+            }
+            
+            
+            if(files.photo){
+                if(files.photo.size > 10000000){
+                    return res.status(400).json({
+                        error:'Image should be less than 1mb in size'
+                    })
+                }
+                oldBlog.photo.data = fs.readFileSync(files.photo.path);
+                oldBlog.photo.contentType = files.photo.type
+            }
+            
+            //when you have an err is because it is
+            //not passing data
+            
+            oldBlog.save((err, result)=>{
+                if(err){
+                    return res.status(400).json({
+                        error:errorHandler(err)
+                    });
+                }
+               res.json(result);
+            })
+        })  
+    })
+};
+
 
 
