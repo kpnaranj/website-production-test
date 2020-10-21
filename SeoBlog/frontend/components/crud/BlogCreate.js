@@ -28,6 +28,8 @@ const BlogCreate = ({router}) =>{
     
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
+    const [checked, setChecked] = useState([]);//only for categories
+    const [checkedTag, setCheckedTag] = useState([]); //for tags
     
     const [body, setBody] = useState(blogFromLS());
     const [values, setValues] = useState({
@@ -40,6 +42,7 @@ const BlogCreate = ({router}) =>{
     })
     
     const {error, sizeError, sucess, formData, title, hidePublishButton} = values;
+    const token = getCookie('token');
     
     useEffect(()=>{
         setValues({...values, formData: new FormData()});
@@ -74,7 +77,18 @@ const BlogCreate = ({router}) =>{
     
     const publishBlog =(e)=>{
         e.preventDefault();
-        console.log('ready to export')
+        
+        CreateBlog(formData, token).then(data=>{
+            if(data.error){
+                setValues({...values, error: data.error});
+            }
+            else{
+                setValues({...values, title:'', error:'', success: `A new blog titled ${data.title} was created`});
+                setBody('');
+                setCategories([]);
+                setTags([])
+            }
+        })
     }
     
     const handleChange =name=>(e)=>{
@@ -91,11 +105,49 @@ const BlogCreate = ({router}) =>{
         }
     }
     
+    const handleToggle =(category)=>()=>{
+        setValues({...values, error:''});
+        
+        // return the first index or -1
+        const clickedCategory = checked.indexOf(category)
+        const all = [...checked]; 
+        
+        if(clickedCategory===-1){
+            all.push(category);
+        }
+        else{
+            all.splice(clickedCategory, 1);
+        }
+        console.log(all);
+        setChecked(all);
+        formData.set('tags', all);
+    }
+    
+    const handleTagToggle=(tag)=>()=>{
+        setValues({...values, error:''});
+        
+        // return the first index or -1
+        const clickedTag = checkedTag.indexOf(tag)
+        const all = [...checkedTag]; 
+        
+        if(clickedTag===-1){
+            all.push(tag);
+        }
+        else{
+            all.splice(clickedTag, 1);
+        }
+        console.log(all);
+        setCheckedTag(all);
+        formData.set('categories', all);
+    }
+    
+    
+    
     const showCategories = () =>{
         return (
             categories && categories.map((category, index)=>(
                 <li key={index} className="list-unstyled">
-                    <input type="checkbox" className="mr-2"/>
+                    <input onChange={handleToggle(category._id)} type="checkbox" className="mr-2"/>
                     <label className="form-check-label">{category.name}</label>
                 </li>
             ))
@@ -107,7 +159,7 @@ const BlogCreate = ({router}) =>{
         return (
             tags && tags.map((tag, index)=>(
                 <li key={index} className="list-unstyled">
-                    <input type="checkbox" className="mr-2"/>
+                    <input onChange={handleTagToggle(tag._id)}  type="checkbox" className="mr-2"/>
                     <label className="form-check-label">{tag.name}</label>
                 </li>
             ))
@@ -151,6 +203,19 @@ const BlogCreate = ({router}) =>{
                 </div>
                 
                 <div className="col-md-4">
+                    <div>
+                        <div className="form-group pb-2">
+                            <h5>Feature image</h5>
+                            <hr/>
+                            
+                            <small className="text-muted">Max size: 1mb</small>
+                            <label className="btn btn-outline-info">
+                                Upload feature image
+                                <input onChange={handleChange('photo')} type="file" accept="image/*" hidden />
+                            </label>
+                            
+                        </div>
+                    </div>
                     <div>
                         <h5>Categories</h5>
                         <hr/>
