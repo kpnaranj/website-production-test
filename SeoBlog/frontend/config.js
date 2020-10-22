@@ -1,10 +1,14 @@
-//import the similar settings from next.config.js
 import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
-//set a variable to be used 
+export const API = publicRuntimeConfig.PRODUCTION
+    ? publicRuntimeConfig.API_PRODUCTION
+    : publicRuntimeConfig.API_DEVELOPMENT;
 
-const {publicRuntimeConfig} = getConfig();
-
-export const API = publicRuntimeConfig.PRODUCTION ? 'http://seoblog.com' : 'http://localhost:5000/api';
 export const APP_NAME = publicRuntimeConfig.APP_NAME;
 
+export const DOMAIN = publicRuntimeConfig.PRODUCTION
+    ? publicRuntimeConfig.DOMAIN_PRODUCTION
+    : publicRuntimeConfig.DOMAIN_DEVELOPMENT;
+
+export const FB_APP_ID = publicRuntimeConfig.FB_APP_ID;
