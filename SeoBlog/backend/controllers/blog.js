@@ -52,7 +52,7 @@ exports.create = (req, res) => {
         blog.slug = slugify(title).toLowerCase();
         blog.mtitle = `${title} | ${process.env.APP_NAME}`;
         blog.mdesc = stripHtml(body.substring(0, 160));
-        blog.postedBy = req.user._id;
+        blog.postedBy = req.auth._id;
         // categories and tags
         let arrayOfCategories = categories && categories.split(',');
         let arrayOfTags = tags && tags.split(',');
