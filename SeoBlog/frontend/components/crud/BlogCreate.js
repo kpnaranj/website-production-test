@@ -9,8 +9,7 @@ import { getTags } from '../../actions/tag';
 import { createBlog } from '../../actions/blog';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import '../../node_modules/react-quill/dist/quill.snow.css';
-import {QuillFormats, QuillModules} from "../../helpers/quill"
-
+import { QuillModules, QuillFormats } from '../../helpers/quill';
 
 const CreateBlog = ({ router }) => {
     const blogFromLS = () => {
@@ -178,7 +177,13 @@ const CreateBlog = ({ router }) => {
                 </div>
 
                 <div className="form-group">
-                <ReactQuill modules={QuillModules} formats={QuillFormats} value={body} placeholder="Write something amazing....." onChange={handleBody}/>
+                    <ReactQuill
+                        modules={QuillModules}
+                        formats={QuillFormats}
+                        value={body}
+                        placeholder="Write something amazing..."
+                        onChange={handleBody}
+                    />
                 </div>
 
                 <div>
@@ -231,7 +236,5 @@ const CreateBlog = ({ router }) => {
         </div>
     );
 };
-
-
 
 export default withRouter(CreateBlog);
