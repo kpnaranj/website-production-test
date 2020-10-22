@@ -52,7 +52,7 @@ exports.create = (req, res) => {
         blog.slug = slugify(title).toLowerCase();
         blog.mtitle = `${title} | ${process.env.APP_NAME}`;
         blog.mdesc = stripHtml(body.substring(0, 160));
-        blog.postedBy = req.auth._id;
+        blog.postedBy = req.user._id;
         // categories and tags
         let arrayOfCategories = categories && categories.split(',');
         let arrayOfTags = tags && tags.split(',');
@@ -289,24 +289,4 @@ exports.listRelated = (req, res) => {
             }
             res.json(blogs);
         });
-};
-
-//
-exports.listSearch = (req, res) => {
-    const { search } = req.query;
-    if (search) {
-        Blog.find(
-            {
-                $or: [{ title: { $regex: search, $options: 'i' } }, { body: { $regex: search, $options: 'i' } }]
-            },
-            (err, blogs) => {
-                if (err) {
-                    return res.status(400).json({
-                        error: errorHandler(err)
-                    });
-                }
-                res.json(blogs);
-            }
-        ).select('-photo -body');
-    }
 };
